@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://modeler.netgrif.com/petriflow_schema.xsd">
+	<!-- ROLES -->
+	<role>
+		<id>zakaznik</id>
+		<name>Zákazník</name>
+	</role>
+	<role>
+		<id>system</id>
+		<name>Systém</name>
+	</role>
+	<role>
+		<id>admin</id>
+		<name>Administrátor</name>
+	</role>
+	<role>
+		<id>predajca</id>
+		<name>Predajca</name>
+	</role>
+	<role>
+		<id>schvalovatel</id>
+		<name>Schvalovateľ</name>
+	</role>
+	<!--DATA-->
+	<data type="text">
+		<id>address</id>
+		<title>Adresa</title>
+	</data>
+	<data type="text">
+		<id>name</id>
+		<title>Názov</title>
+	</data>
 	<!-- TRANSITIONS -->
 	<transition>
 		<id>1</id>

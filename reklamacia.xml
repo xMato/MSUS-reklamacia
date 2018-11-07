@@ -1,59 +1,191 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://modeler.netgrif.com/petriflow_schema.xsd">
+	<!-- ROLES -->
+	<role>
+		<id>zakaznik</id>
+		<name>Zákazník</name>
+	</role>
+	<role>
+		<id>system</id>
+		<name>Systém</name>
+	</role>
+	<role>
+		<id>admin</id>
+		<name>Administrátor</name>
+	</role>
+	<role>
+		<id>predajca</id>
+		<name>Predajca</name>
+	</role>
+	<role>
+		<id>schvalovatel</id>
+		<name>Schvalovateľ</name>
+	</role>
+	<!--DATA-->
+	<data type="file">
+		<id>attachements</id>
+		<title>Príloha</title>
+	</data>
 	<!-- TRANSITIONS -->
 	<transition>
 		<id>1</id>
 		<x>146</x>
 		<y>253</y>
-		<label>vytvorenie reklamacie [zakaznik]</label>
+		<label>vytvorenie reklamacie</label>
+		<roleRef>
+			<id>zakaznik</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<dataGroup>
+			<id>1</id>
+			<dataRef>
+				<id>attachements</id>
+				<logic>
+					<behavior>editable</behavior>
+				</logic>
+			</dataRef>
+		</dataGroup>
 	</transition>
 	<transition>
 		<id>4</id>
 		<x>318</x>
 		<y>143</y>
 		<label>prehliadanie informacii o reklamacii</label>
+		<roleRef>
+			<id>admin</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<roleRef>
+			<id>predajca</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<roleRef>
+			<id>zakaznik</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<roleRef>
+			<id>schvalovatel</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<dataGroup>
+			<id>1</id>
+			<dataRef>
+				<id>attachements</id>
+				<logic>
+					<behavior>visible</behavior>
+				</logic>
+			</dataRef>
+		</dataGroup>
 	</transition>
 	<transition>
 		<id>5</id>
 		<x>311</x>
 		<y>372</y>
 		<label>upravit informacie o reklamacii</label>
+		<roleRef>
+			<id>admin</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<roleRef>
+			<id>zakaznik</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<dataGroup>
+			<id>1</id>
+			<dataRef>
+				<id>attachements</id>
+				<logic>
+					<behavior>editable</behavior>
+					<behavior>required</behavior>
+				</logic>
+			</dataRef>
+		</dataGroup>
 	</transition>
 	<transition>
 		<id>11</id>
 		<x>462</x>
 		<y>262</y>
-		<label>odoslanie reklamacie [zakaznik]</label>
+		<label>odoslanie reklamacie</label>
+		<roleRef>
+			<id>zakaznik</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
 	</transition>
 	<transition>
 		<id>19</id>
 		<x>743</x>
 		<y>208</y>
 		<label>schvalenie</label>
+		<roleRef>
+			<id>predajca</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
 	</transition>
 	<transition>
 		<id>20</id>
 		<x>691</x>
 		<y>326</y>
 		<label>neschvalenie</label>
+		<roleRef>
+			<id>predajca</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
 	</transition>
 	<transition>
 		<id>27</id>
 		<x>960</x>
 		<y>149</y>
 		<label>odmietnutie</label>
+		<roleRef>
+			<id>schvalovatel</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
 	</transition>
 	<transition>
 		<id>28</id>
 		<x>949</x>
 		<y>350</y>
 		<label>vratit</label>
+		<roleRef>
+			<id>schvalovatel</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
 	</transition>
 	<transition>
 		<id>31</id>
 		<x>903</x>
 		<y>27</y>
 		<label>schvalenie</label>
+		<roleRef>
+			<id>schvalovatel</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
 	</transition>
 	<!-- PLACES -->
 	<place>
@@ -118,7 +250,10 @@
 		<sourceId>3</sourceId>
 		<destinationId>5</destinationId>
 		<multiplicity>2</multiplicity>
-		<breakPoint><x>300</x><y>312</y></breakPoint>
+		<breakPoint>
+			<x>300</x>
+			<y>312</y>
+		</breakPoint>
 	</arc>
 	<arc>
 		<id>8</id>
@@ -126,7 +261,10 @@
 		<sourceId>5</sourceId>
 		<destinationId>3</destinationId>
 		<multiplicity>2</multiplicity>
-		<breakPoint><x>338</x><y>314</y></breakPoint>
+		<breakPoint>
+			<x>338</x>
+			<y>314</y>
+		</breakPoint>
 	</arc>
 	<arc>
 		<id>9</id>
@@ -176,7 +314,10 @@
 		<sourceId>20</sourceId>
 		<destinationId>3</destinationId>
 		<multiplicity>1</multiplicity>
-		<breakPoint><x>454</x><y>314</y></breakPoint>
+		<breakPoint>
+			<x>454</x>
+			<y>314</y>
+		</breakPoint>
 	</arc>
 	<arc>
 		<id>26</id>
@@ -212,8 +353,14 @@
 		<sourceId>28</sourceId>
 		<destinationId>3</destinationId>
 		<multiplicity>1</multiplicity>
-		<breakPoint><x>687</x><y>378</y></breakPoint>
-		<breakPoint><x>400</x><y>337</y></breakPoint>
+		<breakPoint>
+			<x>687</x>
+			<y>378</y>
+		</breakPoint>
+		<breakPoint>
+			<x>400</x>
+			<y>337</y>
+		</breakPoint>
 	</arc>
 	<arc>
 		<id>35</id>
