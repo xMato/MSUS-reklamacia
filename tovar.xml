@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://modeler.netgrif.com/petriflow_schema.xsd">
+	<!-- TRANSITIONS -->
+	<transition>
+		<id>1</id>
+		<x>146</x>
+		<y>253</y>
+		<label>vytvorenie tovaru</label>
+	</transition>
+	<transition>
+		<id>4</id>
+		<x>318</x>
+		<y>143</y>
+		<label>prehliadanie informacii o tovare</label>
+	</transition>
+	<transition>
+		<id>5</id>
+		<x>311</x>
+		<y>372</y>
+		<label>upravit informacii o tovare</label>
+	</transition>
+	<!-- PLACES -->
+	<place>
+		<id>2</id>
+		<x>47</x>
+		<y>249</y>
+		<label></label>
+		<tokens>1</tokens>
+		<static>false</static>
+	</place>
+	<place>
+		<id>3</id>
+		<x>315</x>
+		<y>249</y>
+		<label></label>
+		<tokens>0</tokens>
+		<static>false</static>
+	</place>
+	<!-- ARCS -->
+	<arc>
+		<id>6</id>
+		<type>read</type>
+		<sourceId>3</sourceId>
+		<destinationId>4</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>7</id>
+		<type>regular</type>
+		<sourceId>3</sourceId>
+		<destinationId>5</destinationId>
+		<multiplicity>1</multiplicity>
+		<breakPoint><x>300</x><y>312</y></breakPoint>
+	</arc>
+	<arc>
+		<id>8</id>
+		<type>regular</type>
+		<sourceId>5</sourceId>
+		<destinationId>3</destinationId>
+		<multiplicity>1</multiplicity>
+		<breakPoint><x>338</x><y>314</y></breakPoint>
+	</arc>
+	<arc>
+		<id>9</id>
+		<type>regular</type>
+		<sourceId>2</sourceId>
+		<destinationId>1</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+	<arc>
+		<id>10</id>
+		<type>regular</type>
+		<sourceId>1</sourceId>
+		<destinationId>3</destinationId>
+		<multiplicity>1</multiplicity>
+	</arc>
+</document>
