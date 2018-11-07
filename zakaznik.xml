@@ -1,23 +1,147 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://modeler.netgrif.com/petriflow_schema.xsd">
+	<!-- ROLES -->
+	<role>
+		<id>zakaznik</id>
+		<name>Zákazník</name>
+	</role>
+	<role>
+		<id>system</id>
+		<name>Systém</name>
+	</role>
+	<role>
+		<id>admin</id>
+		<name>Administrátor</name>
+	</role>
+	<role>
+		<id>predajca</id>
+		<name>Predajca</name>
+	</role>
+	<role>
+		<id>schvalovatel</id>
+		<name>Schvalovateľ</name>
+	</role>
+	<!--DATA-->
+	<data type="text">
+		<id>address</id>
+		<title>Adresa</title>
+	</data>
+	<data type="text">
+		<id>name</id>
+		<title>Meno</title>
+	</data>
+	<data type="text">
+		<id>surname</id>
+		<title>Priezvisko</title>
+	</data>
 	<!-- TRANSITIONS -->
 	<transition>
 		<id>1</id>
 		<x>146</x>
 		<y>253</y>
 		<label>registracia</label>
+		<roleRef>
+			<id>zakaznik</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<dataGroup>
+			<id>1</id>
+			<dataRef>
+				<id>name</id>
+				<logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+				<id>surname</id>
+				<logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+                <id>address</id>
+                <logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+                </logic>
+            </dataRef>
+		</dataGroup>
 	</transition>
 	<transition>
 		<id>4</id>
 		<x>318</x>
 		<y>143</y>
 		<label>prehliadanie profilu</label>
+		<roleRef>
+			<id>admin</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<roleRef>
+			<id>predajca</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<roleRef>
+			<id>zakaznik</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<roleRef>
+			<id>schvalovatel</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
 	</transition>
 	<transition>
 		<id>5</id>
 		<x>311</x>
 		<y>372</y>
 		<label>upravit profil</label>
+		<roleRef>
+			<id>zakaznik</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<roleRef>
+			<id>admin</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<dataGroup>
+			<id>1</id>
+			<dataRef>
+				<id>name</id>
+				<logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+				<id>surname</id>
+				<logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+                <id>address</id>
+                <logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+                </logic>
+            </dataRef>
+		</dataGroup>
 	</transition>
 	<!-- PLACES -->
 	<place>

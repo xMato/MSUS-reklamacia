@@ -30,14 +30,6 @@
 		<id>name</id>
 		<title>Názov</title>
 	</data>
-	<data type="enumeration">
-		<id>question</id>
-		<title>Question 1:</title>
-		<values>0</values>
-		<values>1</values>
-		<values>2</values>
-		<values>3</values>
-	</data>
 
 	<!-- TRANSITIONS -->
 	<transition>

@@ -1,23 +1,154 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://modeler.netgrif.com/petriflow_schema.xsd">
+		<!-- ROLES -->
+	<role>
+		<id>zakaznik</id>
+		<name>Zákazník</name>
+	</role>
+	<role>
+		<id>system</id>
+		<name>Systém</name>
+	</role>
+	<role>
+		<id>admin</id>
+		<name>Administrátor</name>
+	</role>
+	<role>
+		<id>predajca</id>
+		<name>Predajca</name>
+	</role>
+	<role>
+		<id>schvalovatel</id>
+		<name>Schvalovateľ</name>
+	</role>
+	<!--DATA-->
+	<data type="enumeration">
+		<id>category</id>
+		<title>Kategória</title>
+		<values>Elektro</values>
+		<values>Autá</values>
+		<values>Hračky</values>
+		<values>Oblečenie</values>
+	</data>
+	<data type="text">
+		<id>name</id>
+		<title>Názov</title>
+	</data>
 	<!-- TRANSITIONS -->
 	<transition>
 		<id>1</id>
 		<x>146</x>
 		<y>253</y>
 		<label>vytvorenie tovaru</label>
+		<roleRef>
+			<id>admin</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<roleRef>
+			<id>predajca</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<dataGroup>
+			<id>1</id>
+			<dataRef>
+				<id>name</id>
+				<logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+                <id>category</id>
+                <logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+                </logic>
+            </dataRef>			
+		</dataGroup>
 	</transition>
 	<transition>
 		<id>4</id>
 		<x>318</x>
 		<y>143</y>
 		<label>prehliadanie informacii o tovare</label>
+		<roleRef>
+			<id>admin</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<roleRef>
+			<id>predajca</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<roleRef>
+			<id>zakaznik</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<roleRef>
+			<id>schvalovatel</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<dataGroup>
+			<id>1</id>
+			<dataRef>
+				<id>name</id>
+				<logic>
+                    <behavior>visible</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+                <id>category</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>			
+		</dataGroup>
 	</transition>
 	<transition>
 		<id>5</id>
 		<x>311</x>
 		<y>372</y>
 		<label>upravit informacii o tovare</label>
+		<roleRef>
+			<id>admin</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<roleRef>
+			<id>predajca</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<dataGroup>
+			<id>1</id>
+			<dataRef>
+				<id>name</id>
+				<logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+                <id>category</id>
+                <logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+                </logic>
+            </dataRef>			
+		</dataGroup>
 	</transition>
 	<!-- PLACES -->
 	<place>
