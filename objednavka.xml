@@ -30,12 +30,67 @@
 		<id>name</id>
 		<title>Názov</title>
 	</data>
+	<data type="enumeration">
+		<id>tovar</id>
+		<title>Tovar</title>
+	</data>
+	<data type="enumeration">
+		<id>zakaznik</id>
+		<title>Zákazník</title>
+	</data>
+	<data type="enumeration">
+		<id>obchod</id>
+		<title>Obchod</title>
+	</data>
+
 	<!-- TRANSITIONS -->
 	<transition>
 		<id>1</id>
 		<x>146</x>
 		<y>253</y>
 		<label>vytvorenie objednávky</label>
+		<dataGroup>
+			<id>1</id>
+			<dataRef>
+				<id>tovar</id>
+				<logic>
+					<behavior>editable</behavior>
+					<action trigger="get">
+					tovar: f.tovar;
+					def caseList = findCases( { it.processIdentifier.eq("Team12--TVR")  } ); 
+					change tovar choices {
+						return caseList.collect {it.title}; 
+					} 
+					</action>
+				</logic>
+			</dataRef>
+			<dataRef>
+				<id>zakaznik</id>
+				<logic>
+					<behavior>editable</behavior>
+					<action trigger="get">
+					zakaznik: f.zakaznik;
+					def caseList = findCases( { it.processIdentifier.eq("Team12--ZAK")  } ); 
+					change zakaznik choices {
+						return caseList.collect {it.title}; 
+					} 
+					</action>
+				</logic>
+			</dataRef>
+			<dataRef>
+				<id>obchod</id>
+				<logic>
+					<behavior>editable</behavior>
+					<action trigger="get">
+					obchod: f.obchod;
+					def caseList = findCases( { it.processIdentifier.eq("Team12--OBC")  } ); 
+					change obchod choices {
+						return caseList.collect {it.title}; 
+					} 
+					</action>
+				</logic>
+			</dataRef>
+		</dataGroup>
 	</transition>
 	<transition>
 		<id>4</id>
@@ -80,7 +135,10 @@
 		<sourceId>3</sourceId>
 		<destinationId>5</destinationId>
 		<multiplicity>1</multiplicity>
-		<breakPoint><x>300</x><y>312</y></breakPoint>
+		<breakPoint>
+			<x>300</x>
+			<y>312</y>
+		</breakPoint>
 	</arc>
 	<arc>
 		<id>8</id>
@@ -88,7 +146,10 @@
 		<sourceId>5</sourceId>
 		<destinationId>3</destinationId>
 		<multiplicity>1</multiplicity>
-		<breakPoint><x>338</x><y>314</y></breakPoint>
+		<breakPoint>
+			<x>338</x>
+			<y>314</y>
+		</breakPoint>
 	</arc>
 	<arc>
 		<id>9</id>
