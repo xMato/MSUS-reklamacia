@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://modeler.netgrif.com/petriflow_schema.xsd">
+	<!-- ROLES -->
+	<role>
+		<id>zakaznik</id>
+		<name>Zákazník</name>
+	</role>
+	<role>
+		<id>system</id>
+		<name>Systém</name>
+	</role>
+	<role>
+		<id>admin</id>
+		<name>Administrátor</name>
+	</role>
+	<role>
+		<id>predajca</id>
+		<name>Predajca</name>
+	</role>
+	<role>
+		<id>schvalovatel</id>
+		<name>Schvalovateľ</name>
+	</role>
+	<!--DATA-->
+	<data type="text">
+		<id>address</id>
+		<title>Adresa</title>
+	</data>
+	<data type="text">
+		<id>name</id>
+		<title>Názov</title>
+	</data>
+	<data type="enumeration">
+		<id>tovar</id>
+		<title>Tovar</title>
+	</data>
+	<data type="enumeration">
+		<id>zakaznik</id>
+		<title>Zákazník</title>
+	</data>
+	<data type="enumeration">
+		<id>obchod</id>
+		<title>Obchod</title>
+	</data>
+
+	<!-- TRANSITIONS -->
+	<transition>
+		<id>1</id>
+		<x>146</x>
+		<y>253</y>
+		<label>vytvorenie objednávky</label>
+		<dataGroup>
+			<id>1</id>
+			<dataRef>
+				<id>tovar</id>
+				<logic>
+					<behavior>editable</behavior>
+					<action trigger="get">
+					tovar: f.tovar;
+					def caseList = findCases( { it.processIdentifier.eq("Team12--TVR")  } ); 
+					change tovar choices {
+						return caseList.collect {it.title}; 
+					} 
+					</action>
+				</logic>
+			</dataRef>
+			<dataRef>
+				<id>zakaznik</id>
+				<logic>
+					<behavior>editable</behavior>
+					<action trigger="get">
+					zakaznik: f.zakaznik;
+					def caseList = findCases( { it.processIdentifier.eq("Team12--ZAK")  } ); 
+					change zakaznik choices {
+						return caseList.collect {it.title}; 
+					} 
+					</action>
+				</logic>
+			</dataRef>
+			<dataRef>
+				<id>obchod</id>
+				<logic>
+					<behavior>editable</behavior>
+					<action trigger="get">
+					obchod: f.obchod;
+					def caseList = findCases( { it.processIdentifier.eq("Team12--OBC")  } ); 
+					change obchod choices {
+						return caseList.collect {it.title}; 
+					} 
+					</action>
+				</logic>
+			</dataRef>
+		</dataGroup>
+	</transition>
+	<transition>
+		<id>4</id>
+		<x>318</x>
+		<y>143</y>
+		<label>prehliadanie informacii o objednávke</label>
+	</transition>
+	<transition>
+		<id>5</id>
+		<x>311</x>
+		<y>372</y>
+		<label>upravit informacie o objednávke</label>
+	</transition>
+  <transition>
+    <id>11</id>
+    <x>446</x>
+    <y>250</y>
+    <label>podanie reklamacie</label>
+  </transition>
+  <!-- PLACES -->
+  <place>
+    <id>2</id>
+    <x>47</x>
+    <y>249</y>
+    <label></label>
+    <tokens>1</tokens>
+    <static>false</static>
+  </place>
+  <place>
+    <id>3</id>
+    <x>315</x>
+    <y>249</y>
+    <label></label>
+    <tokens>0</tokens>
+    <static>false</static>
+  </place>
+  <!-- ARCS -->
+  <arc>
+    <id>6</id>
+    <type>read</type>
+    <sourceId>3</sourceId>
+    <destinationId>4</destinationId>
+    <multiplicity>1</multiplicity>
+  </arc>
+  <arc>
+    <id>9</id>
+    <type>regular</type>
+    <sourceId>2</sourceId>
+    <destinationId>1</destinationId>
+    <multiplicity>1</multiplicity>
+  </arc>
+  <arc>
+    <id>10</id>
+    <type>regular</type>
+    <sourceId>1</sourceId>
+    <destinationId>3</destinationId>
+    <multiplicity>2</multiplicity>
+  </arc>
+  <arc>
+    <id>12</id>
+    <type>regular</type>
+    <sourceId>3</sourceId>
+    <destinationId>11</destinationId>
+    <multiplicity>1</multiplicity>
+    <breakPoint>
+      <x>381</x>
+      <y>262</y>
+    </breakPoint>
+  </arc>
+  <arc>
+    <id>13</id>
+    <type>regular</type>
+    <sourceId>11</sourceId>
+    <destinationId>3</destinationId>
+    <multiplicity>1</multiplicity>
+    <breakPoint>
+      <x>379</x>
+      <y>231</y>
+    </breakPoint>
+  </arc>
+  <arc>
+    <id>14</id>
+    <type>read</type>
+    <sourceId>3</sourceId>
+    <destinationId>5</destinationId>
+    <multiplicity>2</multiplicity>
+    <breakPoint>
+      <x>315</x>
+      <y>312</y>
+    </breakPoint>
+  </arc>
+</document>
