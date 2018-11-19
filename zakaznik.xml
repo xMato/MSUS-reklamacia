@@ -34,6 +34,22 @@
 		<id>surname</id>
 		<title>Priezvisko</title>
 	</data>
+	<data type="text">
+		<id>phone</id>
+		<title>Telefón</title>
+	</data>
+	<data type="text">
+		<id>city</id>
+		<title>Mesto</title>
+	</data>
+	<data type="text">
+		<id>psc</id>
+		<title>PSČ</title>
+	</data>
+	<data type="text">
+		<id>mail</id>
+		<title>E-mail</title>
+	</data>
 	<!-- TRANSITIONS -->
 	<transition>
 		<id>1</id>
@@ -48,6 +64,7 @@
 		</roleRef>
 		<dataGroup>
 			<id>1</id>
+			<title>Osobné údaje</title>
 			<dataRef>
 				<id>name</id>
 				<logic>
@@ -63,7 +80,39 @@
 				</logic>
 			</dataRef>
 			<dataRef>
-                <id>address</id>
+                <id>mail</id>
+                <logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+                </logic>
+            </dataRef>
+			<dataRef>
+                <id>phone</id>
+                <logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+                </logic>
+            </dataRef>
+		</dataGroup>
+		<dataGroup>
+			<id>2</id>
+			<title>Fakturačné údaje</title>
+			<dataRef>
+				<id>address</id>
+				<logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+				<id>city</id>
+				<logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+                <id>psc</id>
                 <logic>
                     <behavior>editable</behavior>
                     <behavior>required</behavior>
@@ -109,6 +158,56 @@
 				<perform>true</perform>
 			</logic>
 		</roleRef>
+		<dataGroup>
+			<id>1</id>
+			<title>Osobné údaje</title>
+			<dataRef>
+				<id>name</id>
+				<logic>
+                    <behavior>visible</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+				<id>surname</id>
+				<logic>
+                    <behavior>visible</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+                <id>mail</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+			<dataRef>
+                <id>phone</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+		</dataGroup>
+		<dataGroup>
+			<id>2</id>
+			<title>Fakturačné údaje</title>
+			<dataRef>
+				<id>address</id>
+				<logic>
+                    <behavior>visible</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+				<id>city</id>
+				<logic>
+                    <behavior>visible</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+                <id>psc</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>
+		</dataGroup>
 	</transition>
 	<transition>
 		<id>5</id>
@@ -129,6 +228,7 @@
 		</roleRef>
 		<dataGroup>
 			<id>1</id>
+			<title>Osobné údaje</title>
 			<dataRef>
 				<id>name</id>
 				<logic>
@@ -144,7 +244,39 @@
 				</logic>
 			</dataRef>
 			<dataRef>
-                <id>address</id>
+                <id>mail</id>
+                <logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+                </logic>
+            </dataRef>
+			<dataRef>
+                <id>phone</id>
+                <logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+                </logic>
+            </dataRef>
+		</dataGroup>
+		<dataGroup>
+			<id>2</id>
+			<title>Fakturačné údaje</title>
+			<dataRef>
+				<id>address</id>
+				<logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+				<id>city</id>
+				<logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+                <id>psc</id>
                 <logic>
                     <behavior>editable</behavior>
                     <behavior>required</behavior>

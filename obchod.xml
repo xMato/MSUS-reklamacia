@@ -27,8 +27,20 @@
 		<title>Adresa</title>
 	</data>
 	<data type="text">
+		<id>city</id>
+		<title>Mesto</title>
+	</data>
+	<data type="number">
+		<id>kontakt</id>
+		<title>Telefónny kontakt</title>
+	</data>	
+	<data type="text">
 		<id>name</id>
-		<title>Názov</title>
+		<title>Názov predajne</title>
+	</data>
+	<data type="text">
+		<id>mail</id>
+		<title>E-mail vedúceho predajne</title>
 	</data>
 
 	<!-- TRANSITIONS -->
@@ -43,8 +55,10 @@
 				<perform>true</perform>
 			</logic>
 		</roleRef>
+		
 		<dataGroup>
 			<id>1</id>
+			<title>Základné údaje</title>
 			<dataRef>
 				<id>name</id>
 				<logic>
@@ -59,6 +73,31 @@
                     <behavior>required</behavior>
                 </logic>
             </dataRef>
+			<dataRef>
+				<id>city</id>
+				<logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+				</logic>
+			</dataRef>
+		</dataGroup>
+		<dataGroup>
+			<id>2</id>
+			<title>Kontaktné údaje</title>
+			<dataRef>
+				<id>kontakt</id>
+				<logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+				<id>mail</id>
+				<logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+				</logic>
+			</dataRef>
 		</dataGroup>
 		<event type="finish">
 			<id>event1</id>
@@ -101,6 +140,7 @@
 		</roleRef>
 		<dataGroup>
 			<id>1</id>
+			<title>Základné údaje</title>
 			<dataRef>
 				<id>name</id>
 				<logic>
@@ -108,11 +148,33 @@
 				</logic>
 			</dataRef>
 			<dataRef>
-                <id>address</id>
+				<id>address</id>
+				<logic>
+                    <behavior>visible</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+                <id>city</id>
                 <logic>
                     <behavior>visible</behavior>
                 </logic>
             </dataRef>
+		</dataGroup>
+		<dataGroup>
+			<id>2</id>
+			<title>Kontaktné údaje</title>
+			<dataRef>
+				<id>kontakt</id>
+				<logic>
+                    <behavior>visible</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+				<id>mail</id>
+				<logic>
+                    <behavior>visible</behavior>
+				</logic>
+			</dataRef>
 		</dataGroup>
 	</transition>
 	<transition>
@@ -128,6 +190,7 @@
 		</roleRef>
 		<dataGroup>
 			<id>1</id>
+			<title>Základné údaje</title>
 			<dataRef>
 				<id>name</id>
 				<logic>
@@ -136,12 +199,37 @@
 				</logic>
 			</dataRef>
 			<dataRef>
-                <id>address</id>
+				<id>address</id>
+				<logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+                <id>city</id>
                 <logic>
                     <behavior>editable</behavior>
                     <behavior>required</behavior>
                 </logic>
             </dataRef>
+		</dataGroup>
+		<dataGroup>
+			<id>2</id>
+			<title>Kontaktné údaje</title>
+			<dataRef>
+				<id>kontakt</id>
+				<logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+				<id>mail</id>
+				<logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+				</logic>
+			</dataRef>
 		</dataGroup>
 		<event type="finish">
 			<id>event1</id>
