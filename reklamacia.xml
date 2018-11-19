@@ -216,6 +216,16 @@
 				<perform>true</perform>
 			</logic>
 		</roleRef>
+		<event type="finish">
+			<id>1</id>
+			<actions phase="pre">
+					objednavka : f.objednavka;
+					def calledTask = findTask({it.title.defaultValue.eq("podanie reklamacie").and(it.caseId.eq(objednavka.value))});
+
+					finishTask(calledTask);
+					</action>				
+			</actions>
+		</event>
 	</transition>
 	<!-- PLACES -->
 	<place>
