@@ -61,6 +61,16 @@
 				</logic>
 			</dataRef>
 		</dataGroup>
+		<dataGroup>
+			<id>2</id>
+			<label>Development</label>
+			<dataRef>
+				<id>objednavka</id>
+				<logic>
+					<behavior>visible</behavior>
+				</logic>
+			</dataRef>
+		</dataGroup>
 	</transition>
 	<transition>
 		<id>4</id>

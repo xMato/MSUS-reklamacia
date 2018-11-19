@@ -70,6 +70,15 @@
                 </logic>
             </dataRef>
 		</dataGroup>
+		<event type="finish">
+			<id>event1</id>
+			<actions phase="pre">
+				<action>
+					name: f.name;
+					changeCaseProperty "title" about { name.value }
+				</action>
+			</actions>
+		</event>
 	</transition>
 	<transition>
 		<id>4</id>
@@ -142,6 +151,15 @@
                 </logic>
             </dataRef>
 		</dataGroup>
+		<event type="finish">
+			<id>event1</id>
+			<actions phase="pre">
+				<action>
+					name: f.name;
+					changeCaseProperty "title" about { name.value }
+				</action>
+			</actions>
+		</event>
 	</transition>
 	<!-- PLACES -->
 	<place>
@@ -149,7 +167,7 @@
 		<x>47</x>
 		<y>249</y>
 		<label></label>
-		<tokens>0</tokens>
+		<tokens>1</tokens>
 		<static>false</static>
 	</place>
 	<place>

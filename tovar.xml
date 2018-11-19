@@ -158,6 +158,15 @@
                 </logic>
             </dataRef>			
 		</dataGroup>
+		<event type="finish">
+			<id>event1</id>
+			<actions phase="pre">
+				<action>
+					name: f.name;
+					changeCaseProperty "title" about { name.value }
+				</action>
+			</actions>
+		</event>
 	</transition>
 	<!-- PLACES -->
 	<place>
