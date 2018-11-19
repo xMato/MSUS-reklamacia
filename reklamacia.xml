@@ -26,6 +26,14 @@
 		<id>attachements</id>
 		<title>Príloha</title>
 	</data>
+	<data type="text">
+		<id>objednavka</id>
+		<title>Objednávka</title>
+	</data>
+	<data type="text">
+		<id>issue</id>
+		<title>Popis problému</title>
+	</data>
 	<!-- TRANSITIONS -->
 	<transition>
 		<id>1</id>
@@ -42,6 +50,12 @@
 			<id>1</id>
 			<dataRef>
 				<id>attachements</id>
+				<logic>
+					<behavior>editable</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+				<id>issue</id>
 				<logic>
 					<behavior>editable</behavior>
 				</logic>
@@ -81,6 +95,12 @@
 			<id>1</id>
 			<dataRef>
 				<id>attachements</id>
+				<logic>
+					<behavior>visible</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+				<id>objednavka</id>
 				<logic>
 					<behavior>visible</behavior>
 				</logic>
