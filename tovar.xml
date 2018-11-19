@@ -29,6 +29,20 @@
 		<values>Autá</values>
 		<values>Hračky</values>
 		<values>Oblečenie</values>
+		<values>Drogéria</values>
+		<values>Hobby a záhrada</values>
+	</data>
+	<data type="number">
+		<id>rate</id>
+		<title>Priemerné hodnotenie</title>
+	</data>
+	<data type="number">
+		<id>price</id>
+		<title>Cena</title>
+	</data>
+	<data type="number">
+		<id>norates</id>
+		<title>Počet hodnotení</title>
 	</data>
 	<data type="text">
 		<id>name</id>
@@ -54,6 +68,7 @@
 		</roleRef>
 		<dataGroup>
 			<id>1</id>
+			<title>Podrobnosti</title>
 			<dataRef>
 				<id>name</id>
 				<logic>
@@ -63,6 +78,31 @@
 			</dataRef>
 			<dataRef>
                 <id>category</id>
+                <logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+                </logic>
+            </dataRef>	
+			<dataRef>
+				<id>price</id>
+				<logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+				</logic>
+			</dataRef>		
+		</dataGroup>
+		<dataGroup>
+			<id>2</id>
+			<title>Hodnotenie</title>
+			<dataRef>
+				<id>rate</id>
+				<logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+                <id>norates</id>
                 <logic>
                     <behavior>editable</behavior>
                     <behavior>required</behavior>
@@ -110,6 +150,7 @@
 		</roleRef>
 		<dataGroup>
 			<id>1</id>
+			<title>Podrobnosti</title>
 			<dataRef>
 				<id>name</id>
 				<logic>
@@ -118,6 +159,28 @@
 			</dataRef>
 			<dataRef>
                 <id>category</id>
+                <logic>
+                    <behavior>visible</behavior>
+                </logic>
+            </dataRef>	
+			<dataRef>
+				<id>price</id>
+				<logic>
+                    <behavior>visible</behavior>
+				</logic>
+			</dataRef>		
+		</dataGroup>
+		<dataGroup>
+			<id>2</id>
+			<title>Hodnotenie</title>
+			<dataRef>
+				<id>rate</id>
+				<logic>
+                    <behavior>visible</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+                <id>norates</id>
                 <logic>
                     <behavior>visible</behavior>
                 </logic>
@@ -143,6 +206,7 @@
 		</roleRef>
 		<dataGroup>
 			<id>1</id>
+			<title>Podrobnosti</title>
 			<dataRef>
 				<id>name</id>
 				<logic>
@@ -152,6 +216,31 @@
 			</dataRef>
 			<dataRef>
                 <id>category</id>
+                <logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+                </logic>
+            </dataRef>	
+			<dataRef>
+				<id>price</id>
+				<logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+				</logic>
+			</dataRef>		
+		</dataGroup>
+		<dataGroup>
+			<id>2</id>
+			<title>Hodnotenie</title>
+			<dataRef>
+				<id>rate</id>
+				<logic>
+                    <behavior>editable</behavior>
+                    <behavior>required</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+                <id>norates</id>
                 <logic>
                     <behavior>editable</behavior>
                     <behavior>required</behavior>
