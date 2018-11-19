@@ -173,7 +173,7 @@
     <y>250</y>
     <label>podanie reklamacie</label>
 
-	<event type="finish">
+	<event type="assign">
 			<id>1</id>
 			<actions phase="pre">
 				<action>
