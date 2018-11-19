@@ -34,6 +34,10 @@
 		<id>issue</id>
 		<title>Popis problému</title>
 	</data>
+	<data type="text">
+		<id>status</id>
+		<title>Status</title>
+	</data>
 	<!-- TRANSITIONS -->
 	<transition>
 		<id>1</id>
@@ -48,6 +52,7 @@
 		</roleRef>
 		<dataGroup>
 			<id>1</id>
+			<title>Reklamácia</title>
 			<dataRef>
 				<id>attachements</id>
 				<logic>
@@ -63,7 +68,7 @@
 		</dataGroup>
 		<dataGroup>
 			<id>2</id>
-			<label>Development</label>
+			<title>Development</title>
 			<dataRef>
 				<id>objednavka</id>
 				<logic>
@@ -103,12 +108,29 @@
 		</roleRef>
 		<dataGroup>
 			<id>1</id>
+			<title>Reklamácia</title>
 			<dataRef>
 				<id>attachements</id>
 				<logic>
 					<behavior>visible</behavior>
 				</logic>
 			</dataRef>
+			<dataRef>
+				<id>issue</id>
+				<logic>
+					<behavior>visible</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+				<id>status</id>
+				<logic>
+					<behavior>visible</behavior>
+				</logic>
+			</dataRef>
+		</dataGroup>
+		<dataGroup>
+			<id>2</id>
+			<title>Development</title>
 			<dataRef>
 				<id>objednavka</id>
 				<logic>
@@ -219,11 +241,12 @@
 		<event type="finish">
 			<id>1</id>
 			<actions phase="pre">
+				<action>	
 					objednavka : f.objednavka;
 					def calledTask = findTask({it.title.defaultValue.eq("podanie reklamacie").and(it.caseId.eq(objednavka.value))});
 
 					finishTask(calledTask);
-					</action>				
+				</action>				
 			</actions>
 		</event>
 	</transition>
