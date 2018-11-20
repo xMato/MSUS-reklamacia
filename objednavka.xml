@@ -46,10 +46,26 @@
 		<id>zakaznik</id>
 		<title>Zákazník</title>
 	</data>
+  <data type="enumeration">
+    <id>zakaznik_ids</id>
+    <title></title>
+  </data>
+  <data type="text">
+    <id>selected_zakaznik</id>
+    <title>selected Zakanzik</title>
+  </data>
 	<data type="enumeration">
 		<id>obchod</id>
 		<title>Obchod</title>
 	</data>
+  <data type="enumeration">
+    <id>obchod_ids</id>
+    <title></title>
+  </data>
+  <data type="text">
+    <id>selected_obchod</id>
+    <title>selected Obchod</title>
+  </data>
 	<data type="text">
 		<id>rekId</id>
 		<title>rekId</title>
@@ -98,13 +114,31 @@
 				<id>zakaznik</id>
 				<logic>
 					<behavior>editable</behavior>
-					<action trigger="get">
-					zakaznik: f.zakaznik;
-					def caseList = findCases( { it.processIdentifier.eq("Team12--ZAK")  } ); 
-					change zakaznik choices {
-						return caseList.collect {it.title}; 
-					} 
-					</action>
+          <action trigger="get">
+            zakaznik: f.zakaznik,
+            zakaznik_ids: f.zakaznik_ids;
+            def caseList = findCases( { it.processIdentifier.eq("Team12--ZAK")  } );
+            change zakaznik choices {
+            return caseList.collect {it.title};
+            }
+            change zakaznik_ids choices {
+            return caseList.collect {it.stringId};
+            }
+          </action>
+          <action trigger="set">
+            zakaznik: f.zakaznik,
+            zakaznik_ids: f.zakaznik_ids,
+            selected_zakaznik : f.selected_zakaznik;
+            def indexZakaznik;
+            zakaznik.choices.eachWithIndex{ item,index->
+            if(item == zakaznik.value)
+            indexZakanik = index;
+            }
+
+
+            change selected_zakaznik about{return zakaznik_ids.choices[indexZakaznik].defaultValue; }
+
+          </action>
 				</logic>
 			</dataRef>
 			<dataRef>
@@ -112,12 +146,30 @@
 				<logic>
 					<behavior>editable</behavior>
 					<action trigger="get">
-					obchod: f.obchod;
-					def caseList = findCases( { it.processIdentifier.eq("Team12--OBC")  } ); 
-					change obchod choices {
-						return caseList.collect {it.title}; 
-					} 
-					</action>
+            obchod: f.obchod,
+            obchod_ids: f.obchod_ids;
+            def caseList = findCases( { it.processIdentifier.eq("Team12--OBC")  } );
+            change obchod choices {
+            return caseList.collect {it.title};
+            }
+            change obchod_ids choices {
+            return caseList.collect {it.stringId};
+            }
+          </action>
+          <action trigger="set">
+            obchod: f.obchod,
+            obchod_ids: f.obchod_ids,
+            selected_obchod : f.selected_obchod;
+            def indexObchod;
+            obchod.choices.eachWithIndex{ item,index->
+            if(item == obchod.value)
+            indexObchod = index;
+            }
+
+
+            change selected_obchod about{return obchod_ids.choices[indexObchod].defaultValue; }
+
+          </action>
 				</logic>
 			</dataRef>
 		</dataGroup>
@@ -141,12 +193,25 @@
 		<label>prehliadanie informacii o objednávke</label>
 		<dataGroup>
 			<id>1</id>
+      <title>Development</title>
 			<dataRef>
 				<id>selected_tovar</id>
 				<logic>
 					<behavior>visible</behavior>
 				</logic>
 			</dataRef>
+      <dataRef>
+        <id>selected_zakaznik</id>
+        <logic>
+          <behavior>visible</behavior>
+        </logic>
+      </dataRef>
+      <dataRef>
+        <id>selected_obchod</id>
+        <logic>
+          <behavior>visible</behavior>
+        </logic>
+      </dataRef>
 		</dataGroup>	
 	</transition>
 	<transition>
