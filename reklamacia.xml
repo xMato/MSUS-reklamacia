@@ -38,6 +38,15 @@
 		<id>status</id>
 		<title>Status</title>
 	</data>
+	<data type="text">
+		<id>message</id>
+		<title>Správa o doplnení údajov</title>
+	</data>
+	<data type="text">
+		<id>nazovTovaru</id>
+		<title>Názov Tovaru</title>
+	</data>
+	
 	<!-- TRANSITIONS -->
 	<transition>
 		<id>1</id>
@@ -76,6 +85,23 @@
 				</logic>
 			</dataRef>
 		</dataGroup>
+		<event type="finish">
+			<id>1</id>
+			<actions phase="pre">
+				<action>	
+					objednavka : f.objednavka,
+					nazovTovaru : f.nazovTovaru,
+					status : f.status;
+					change status value{return("Vytvorená");}
+					def myObjednavka = findCase({it._id.eq(new org.bson.types.ObjectId(objednavka.value))});
+					def dataObjednavka =  getData("4", myObjednavka);
+					
+					change nazovTovaru value{return(dataObjednavka["tovar"].value);}
+					
+
+				</action>				
+			</actions>
+		</event>
 	</transition>
 	<transition>
 		<id>4</id>
@@ -122,7 +148,19 @@
 				</logic>
 			</dataRef>
 			<dataRef>
+				<id>message</id>
+				<logic>
+					<behavior>visible</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
 				<id>status</id>
+				<logic>
+					<behavior>visible</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+				<id>nazovTovaru</id>
 				<logic>
 					<behavior>visible</behavior>
 				</logic>
@@ -178,60 +216,79 @@
 				<perform>true</perform>
 			</logic>
 		</roleRef>
+		<event type="finish">
+			<id>1</id>
+			<actions phase="pre">
+				<action>	
+					status : f.status;
+					change status value{
+						return("Odoslaná");
+					}
+				</action>				
+			</actions>
+		</event>
 	</transition>
 	<transition>
 		<id>19</id>
 		<x>743</x>
 		<y>208</y>
-		<label>schvalenie</label>
+		<label>Schváliť</label>
 		<roleRef>
 			<id>predajca</id>
 			<logic>
 				<perform>true</perform>
 			</logic>
 		</roleRef>
+		<event type="finish">
+			<id>1</id>
+			<actions phase="pre">
+				<action>	
+					status : f.status;
+					change status value{
+						return("Schválená predajcom");
+					}
+				</action>				
+			</actions>
+		</event>
 	</transition>
 	<transition>
 		<id>20</id>
 		<x>691</x>
 		<y>326</y>
-		<label>neschvalenie</label>
+		<label>Vrátiť</label>
 		<roleRef>
 			<id>predajca</id>
 			<logic>
 				<perform>true</perform>
 			</logic>
 		</roleRef>
+		<dataGroup>
+			<id>1</id>
+			<dataRef>
+				<id>message</id>
+				<logic>
+					<behavior>editable</behavior>
+					<behavior>required</behavior>
+				</logic>
+			</dataRef>
+		</dataGroup>
+		<event type="finish">
+			<id>1</id>
+			<actions phase="pre">
+				<action>	
+					status : f.status;
+					change status value{
+						return("Vrátená predajcom");
+					}
+				</action>				
+			</actions>
+		</event>
 	</transition>
 	<transition>
 		<id>27</id>
 		<x>960</x>
 		<y>149</y>
-		<label>odmietnutie</label>
-		<roleRef>
-			<id>schvalovatel</id>
-			<logic>
-				<perform>true</perform>
-			</logic>
-		</roleRef>
-	</transition>
-	<transition>
-		<id>28</id>
-		<x>949</x>
-		<y>350</y>
-		<label>vratit</label>
-		<roleRef>
-			<id>schvalovatel</id>
-			<logic>
-				<perform>true</perform>
-			</logic>
-		</roleRef>
-	</transition>
-	<transition>
-		<id>31</id>
-		<x>903</x>
-		<y>27</y>
-		<label>schvalenie</label>
+		<label>Zamietnutie</label>
 		<roleRef>
 			<id>schvalovatel</id>
 			<logic>
@@ -242,9 +299,68 @@
 			<id>1</id>
 			<actions phase="pre">
 				<action>	
-					objednavka : f.objednavka;
-					def calledTask = findTask({it.title.defaultValue.eq("podanie reklamacie").and(it.caseId.eq(objednavka.value))});
+					status : f.status;
+					change status value{
+						return("Zamietnutá");
+					}
+				</action>				
+			</actions>
+		</event>
+	</transition>
+	<transition>
+		<id>28</id>
+		<x>949</x>
+		<y>350</y>
+		<label>Vrátiť podávajúcemu</label>
+		<roleRef>
+			<id>schvalovatel</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<dataGroup>
+			<id>1</id>
+			<dataRef>
+				<id>message</id>
+				<logic>
+					<behavior>editable</behavior>
+					<behavior>required</behavior>
+				</logic>
+			</dataRef>
+		</dataGroup>
+		<event type="finish">
+			<id>1</id>
+			<actions phase="pre">
+				<action>	
+					status : f.status;
+					change status value{
+						return("Vrátená");
+					}
+				</action>				
+			</actions>
+		</event>
+	</transition>
+	<transition>
+		<id>31</id>
+		<x>903</x>
+		<y>27</y>
+		<label>Finálne schválenie </label>
+		<roleRef>
+			<id>schvalovatel</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<event type="finish">
+			<id>1</id>
+			<actions phase="pre">
+				<action>	
+					objednavka : f.objednavka,
+					status : f.status;
 
+					change status value{return("Schválená");}
+
+					def calledTask = findTask({it.title.defaultValue.eq("podanie reklamacie").and(it.caseId.eq(objednavka.value))});
 					finishTask(calledTask);
 				</action>				
 			</actions>

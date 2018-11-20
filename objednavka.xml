@@ -35,6 +35,14 @@
 		<title>Tovar</title>
 	</data>
 	<data type="enumeration">
+		<id>tovar_ids</id>
+		<title></title>
+	</data>
+	<data type="text">
+		<id>selected_tovar</id>
+		<title>selected Tovar</title>
+	</data>
+	<data type="enumeration">
 		<id>zakaznik</id>
 		<title>Zákazník</title>
 	</data>
@@ -60,13 +68,30 @@
 				<logic>
 					<behavior>editable</behavior>
 					<action trigger="get">
-					tovar: f.tovar;
+					tovar: f.tovar,
+					tovar_ids: f.tovar_ids;
 					def caseList = findCases( { it.processIdentifier.eq("Team12--TVR")  } ); 
 					change tovar choices {
 						return caseList.collect {it.title}; 
 					} 
+					change tovar_ids choices {
+						return caseList.collect {it.stringId}; 
+					} 
 					</action>
+					<action trigger="set">
+					tovar: f.tovar,
+					tovar_ids: f.tovar_ids,
+					selected_tovar : f.selected_tovar;
+					def indexTovar;
+					tovar.choices.eachWithIndex{ item,index->
+						if(item == tovar.value)
+							indexTovar = index;
+						}
+						
 					
+					change selected_tovar about{return tovar_ids.choices[indexTovar].defaultValue; }
+
+					</action>
 				</logic>
 			</dataRef>
 			<dataRef>
@@ -114,6 +139,15 @@
 		<x>318</x>
 		<y>143</y>
 		<label>prehliadanie informacii o objednávke</label>
+		<dataGroup>
+			<id>1</id>
+			<dataRef>
+				<id>selected_tovar</id>
+				<logic>
+					<behavior>visible</behavior>
+				</logic>
+			</dataRef>
+		</dataGroup>	
 	</transition>
 	<transition>
 		<id>5</id>
