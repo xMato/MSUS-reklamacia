@@ -40,7 +40,7 @@
 	</data>
 	<data type="text">
 		<id>selected_tovar</id>
-		<title>selected Tovar</title>
+		<title>Objednaný tovar</title>
 	</data>
 	<data type="enumeration">
 		<id>zakaznik</id>
@@ -52,7 +52,7 @@
   </data>
   <data type="text">
     <id>selected_zakaznik</id>
-    <title>selected Zakanzik</title>
+    <title>Objednávateľ</title>
   </data>
 	<data type="enumeration">
 		<id>obchod</id>
@@ -64,13 +64,42 @@
   </data>
   <data type="text">
     <id>selected_obchod</id>
-    <title>selected Obchod</title>
+    <title>Oberné miesto</title>
   </data>
 	<data type="text">
 		<id>rekId</id>
 		<title>rekId</title>
 	</data>
-
+	<data type="enumeration">
+		<id>category</id>
+		<title>Kategória</title>
+		<values>Elektro</values>
+		<values>Autá</values>
+		<values>Hračky</values>
+		<values>Oblečenie</values>
+		<values>Drogéria</values>
+		<values>Hobby a záhrada</values>
+	</data>
+	<data type="text">
+		<id>surname</id>
+		<title>Priezvisko</title>
+	</data>
+	<data type="text">
+		<id>mail</id>
+		<title>E-mail</title>
+	</data>
+	<data type="number">
+		<id>price</id>
+		<title>Cena</title>
+	</data>
+	<data type="text">
+		<id>city</id>
+		<title>Mesto</title>
+	</data>
+	<data type="number">
+		<id>kontakt</id>
+		<title>Telefónny kontakt</title>
+	</data>	
 	<!-- TRANSITIONS -->
 	<transition>
 		<id>1</id>
@@ -132,7 +161,7 @@
             def indexZakaznik;
             zakaznik.choices.eachWithIndex{ item,index->
             if(item == zakaznik.value)
-            indexZakanik = index;
+            indexZakaznik = index;
             }
 
 
@@ -193,26 +222,76 @@
 		<label>prehliadanie informacii o objednávke</label>
 		<dataGroup>
 			<id>1</id>
-      <title>Development</title>
+      <title>Podrobnosti o Tovare</title>
 			<dataRef>
 				<id>selected_tovar</id>
 				<logic>
 					<behavior>visible</behavior>
 				</logic>
 			</dataRef>
+			<dataRef>
+				<id>category</id>
+				<logic>
+					<behavior>visible</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+				<id>price</id>
+				<logic>
+					<behavior>visible</behavior>
+				</logic>
+			</dataRef>
+		</dataGroup>
+		<dataGroup>
+			<id>2</id>
+			<title>Podrobnosti o Zákazníkovi</title>
       <dataRef>
         <id>selected_zakaznik</id>
         <logic>
           <behavior>visible</behavior>
         </logic>
       </dataRef>
+			<dataRef>
+        <id>surname</id>
+        <logic>
+          <behavior>visible</behavior>
+        </logic>
+      </dataRef>
+			<dataRef>
+        <id>mail</id>
+        <logic>
+          <behavior>visible</behavior>
+        </logic>
+      </dataRef>
+		</dataGroup>
+		<dataGroup>
+			<id>3</id>
+			<title>Podrobnosti o Predajni</title>
       <dataRef>
         <id>selected_obchod</id>
         <logic>
           <behavior>visible</behavior>
         </logic>
       </dataRef>
-		</dataGroup>	
+			<dataRef>
+        <id>address</id>
+        <logic>
+          <behavior>visible</behavior>
+        </logic>
+      </dataRef>
+			<dataRef>
+        <id>city</id>
+        <logic>
+          <behavior>visible</behavior>
+        </logic>
+      </dataRef>
+			<dataRef>
+        <id>kontakt</id>
+        <logic>
+          <behavior>visible</behavior>
+        </logic>
+      </dataRef>
+		</dataGroup>
 	</transition>
 	<transition>
 		<id>5</id>
