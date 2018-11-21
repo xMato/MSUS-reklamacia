@@ -96,6 +96,10 @@
 		<id>city</id>
 		<title>Mesto</title>
 	</data>
+	<data type="boolean">
+		<id>can_finish</id>
+		<title></title>
+	</data>
 	<data type="number">
 		<id>kontakt</id>
 		<title>Telefónny kontakt</title>
@@ -132,10 +136,7 @@
 						if(item == tovar.value)
 							indexTovar = index;
 						}
-						
-					
 					change selected_tovar about{return tovar_ids.choices[indexTovar].defaultValue; }
-
 					</action>
 				</logic>
 			</dataRef>
@@ -163,10 +164,7 @@
             if(item == zakaznik.value)
             indexZakaznik = index;
             }
-
-
             change selected_zakaznik about{return zakaznik_ids.choices[indexZakaznik].defaultValue; }
-
           </action>
 				</logic>
 			</dataRef>
@@ -194,10 +192,7 @@
             if(item == obchod.value)
             indexObchod = index;
             }
-
-
             change selected_obchod about{return obchod_ids.choices[indexObchod].defaultValue; }
-
           </action>
 				</logic>
 			</dataRef>
@@ -206,11 +201,35 @@
 			<id>1</id>
 			<actions phase="pre">
 				<action>
-					tovar : f.tovar,
-					zakaznik : f.zakaznik;
-					def s = "";
-					s =  "objednavka" ;
-					changeCaseProperty "title" about {s}
+					selected_tovar: f.selected_tovar,
+					category: f.category,
+					price : f.price,
+					selected_zakaznik: f.selected_zakaznik,
+					surname: f.surname,
+					mail : f.mail,
+					selected_obchod: f.selected_obchod,
+					address: f.address,
+					kontakt : f.kontakt,
+					city : f.city;
+					
+					def myTovar = findCase({it._id.eq(new org.bson.types.ObjectId(selected_tovar.value))});
+					def dataTovar =  getData("4", myTovar);
+					change price value{return(dataTovar["price"].value);}
+					change category value{return(dataTovar["category"].value);}
+
+					def myZakaznik = findCase({it._id.eq(new org.bson.types.ObjectId(selected_zakaznik.value))});
+					def dataZakaznik =  getData("4", myZakaznik);
+					change surname value{return(dataZakaznik["surname"].value);}
+					change mail value{return(dataZakaznik["mail"].value);}
+
+					
+					def myObchod = findCase({it._id.eq(new org.bson.types.ObjectId(selected_obchod.value))});
+					def dataObchod =  getData("4", myObchod);
+					change address value{return(dataObchod["address"].value);}
+					change city value{return(dataObchod["city"].value);}
+					change kontakt value{return(dataObchod["kontakt"].value);}
+
+					changeCaseProperty "title" about {"objednavka"}
 				</action>
 			</actions>
 		</event>
@@ -342,7 +361,42 @@
 				</logic>
 			</dataRef>
 		</dataGroup>
-		
+		<event type="finish">
+			<id>1</id>
+			<actions phase="pre">
+				<action>
+					selected_tovar: f.selected_tovar,
+					category: f.category,
+					price : f.price,
+					selected_zakaznik: f.selected_zakaznik,
+					surname: f.surname,
+					mail : f.mail,
+					selected_obchod: f.selected_obchod,
+					address: f.address,
+					kontakt : f.kontakt,
+					city : f.city;
+
+					def myTovar = findCase({it._id.eq(new org.bson.types.ObjectId(selected_tovar.value))});
+					def dataTovar =  getData("4", myTovar);
+					change price value{return(dataTovar["price"].value);}
+					change category value{return(dataTovar["category"].value);}
+
+					def myZakaznik = findCase({it._id.eq(new org.bson.types.ObjectId(selected_zakaznik.value))});
+					def dataZakaznik =  getData("4", myZakaznik);
+					change surname value{return(dataZakaznik["surname"].value);}
+					change mail value{return(dataZakaznik["mail"].value);}
+
+					
+					def myObchod = findCase({it._id.eq(new org.bson.types.ObjectId(selected_obchod.value))});
+					def dataObchod =  getData("4", myObchod);
+					change address value{return(dataObchod["address"].value);}
+					change city value{return(dataObchod["city"].value);}
+					change kontakt value{return(dataObchod["kontakt"].value);}
+
+					changeCaseProperty "title" about {"objednavka"}
+				</action>
+			</actions>
+		</event>
 	</transition>
 	
   <transition>
@@ -351,29 +405,48 @@
     <y>250</y>
     <label>podanie reklamacie</label>
 
-	<event type="assign">
-			<id>1</id>
-			<actions phase="pre">
-				<action>
-					rekId : f.rekId;
-					def newCase = createCase("Team12--REK", "reklamacia");
-					change rekId value {
-						return newCase.getStringId();
-					}
-				</action>
-				<action>
-					rekId : f.rekId;
-					def calledTask = findTask({it.title.defaultValue.eq("vytvorenie reklamacie").and(it.caseId.eq(rekId.value))});
+			<dataRef>
+				<id>can_finish</id>
+				<logic>
+					<behavior>hidden</behavior>
+					<behavior>editable</behavior>
+				</logic>
+			</dataRef>
+		<event type="assign">
+				<id>1</id>
+				<actions phase="pre">
+					<action>
+						rekId : f.rekId;
+						def newCase = createCase("Team12--REK", "reklamacia");
+						change rekId value {
+							return newCase.getStringId();
+						}
+					</action>
+					<action>
+						rekId : f.rekId;
+						def calledTask = findTask({it.title.defaultValue.eq("vytvorenie reklamacie").and(it.caseId.eq(rekId.value))});
 
-					calledTask = assignTask(calledTask);
-					setData(calledTask, [
-						"objednavka": [
-							"value" : useCase.getStringId(),
-							"type" : "text"
-						]
-					]);
+						calledTask = assignTask(calledTask);
+						setData(calledTask, [
+							"objednavka": [
+								"value" : useCase.getStringId(),
+								"type" : "text"
+							]
+						]);
 
 				</action>				
+			</actions>
+		</event>
+		<event type="finish">
+				<id>1</id>
+				<actions phase="pre">
+					<action>
+						can_finish : f.can_finish;
+						if(can_finish.value == false){
+							throw new Exception("Nemozeš ukončiť reklamáciu!");
+						}
+					</action>
+								
 			</actions>
 		</event>
   </transition>

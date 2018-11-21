@@ -94,8 +94,7 @@
 					status : f.status;
 					change status value{return("Vytvorená");}
 					def myObjednavka = findCase({it._id.eq(new org.bson.types.ObjectId(objednavka.value))});
-					def dataObjednavka =  getData("4", myObjednavka);
-					 
+					def dataObjednavka =  getData("4", myObjednavka);					 
 					change nazovTovaru value{return(dataObjednavka["selected_tovar"].value);}
 					
 
@@ -298,11 +297,22 @@
 		<event type="finish">
 			<id>1</id>
 			<actions phase="pre">
+				<action>
+				</action>
 				<action>	
+					objednavka : f.objednavka,
 					status : f.status;
-					change status value{
-						return("Zamietnutá");
-					}
+
+					change status value{return("Zamietnutá");}
+
+					def calledTask = findTask({it.title.defaultValue.eq("podanie reklamacie").and(it.caseId.eq(objednavka.value))});
+					setData(calledTask, [
+							"can_finish": [
+								"value" : true,
+								"type" : "boolean"
+							]
+						]);
+					finishTask(calledTask);
 				</action>				
 			</actions>
 		</event>
@@ -363,6 +373,12 @@
 					change status value{return("Schválená");}
 
 					def calledTask = findTask({it.title.defaultValue.eq("podanie reklamacie").and(it.caseId.eq(objednavka.value))});
+					setData(calledTask, [
+							"can_finish": [
+								"value" : true,
+								"type" : "boolean"
+							]
+						]);
 					finishTask(calledTask);
 				</action>				
 			</actions>
