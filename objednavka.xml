@@ -40,21 +40,66 @@
 	</data>
 	<data type="text">
 		<id>selected_tovar</id>
-		<title>selected Tovar</title>
+		<title>Objednaný tovar</title>
 	</data>
 	<data type="enumeration">
 		<id>zakaznik</id>
 		<title>Zákazník</title>
 	</data>
+  <data type="enumeration">
+    <id>zakaznik_ids</id>
+    <title></title>
+  </data>
+  <data type="text">
+    <id>selected_zakaznik</id>
+    <title>Objednávateľ</title>
+  </data>
 	<data type="enumeration">
 		<id>obchod</id>
 		<title>Obchod</title>
 	</data>
+  <data type="enumeration">
+    <id>obchod_ids</id>
+    <title></title>
+  </data>
+  <data type="text">
+    <id>selected_obchod</id>
+    <title>Oberné miesto</title>
+  </data>
 	<data type="text">
 		<id>rekId</id>
 		<title>rekId</title>
 	</data>
-
+	<data type="enumeration">
+		<id>category</id>
+		<title>Kategória</title>
+		<values>Elektro</values>
+		<values>Autá</values>
+		<values>Hračky</values>
+		<values>Oblečenie</values>
+		<values>Drogéria</values>
+		<values>Hobby a záhrada</values>
+	</data>
+	<data type="text">
+		<id>surname</id>
+		<title>Priezvisko</title>
+	</data>
+	<data type="text">
+		<id>mail</id>
+		<title>E-mail</title>
+	</data>
+	<data type="number">
+		<id>price</id>
+		<title>Cena</title>
+	</data>
+	<data type="text">
+		<id>city</id>
+		<title>Mesto</title>
+	</data>
+	<data type="number">
+		<id>kontakt</id>
+		<title>Telefónny kontakt</title>
+	</data>	
 	<!-- TRANSITIONS -->
 	<transition>
 		<id>1</id>
@@ -98,13 +143,31 @@
 				<id>zakaznik</id>
 				<logic>
 					<behavior>editable</behavior>
-					<action trigger="get">
-					zakaznik: f.zakaznik;
-					def caseList = findCases( { it.processIdentifier.eq("Team12--ZAK")  } ); 
-					change zakaznik choices {
-						return caseList.collect {it.title}; 
-					} 
-					</action>
+          <action trigger="get">
+            zakaznik: f.zakaznik,
+            zakaznik_ids: f.zakaznik_ids;
+            def caseList = findCases( { it.processIdentifier.eq("Team12--ZAK")  } );
+            change zakaznik choices {
+            return caseList.collect {it.title};
+            }
+            change zakaznik_ids choices {
+            return caseList.collect {it.stringId};
+            }
+          </action>
+          <action trigger="set">
+            zakaznik: f.zakaznik,
+            zakaznik_ids: f.zakaznik_ids,
+            selected_zakaznik : f.selected_zakaznik;
+            def indexZakaznik;
+            zakaznik.choices.eachWithIndex{ item,index->
+            if(item == zakaznik.value)
+            indexZakaznik = index;
+            }
+
+
+            change selected_zakaznik about{return zakaznik_ids.choices[indexZakaznik].defaultValue; }
+
+          </action>
 				</logic>
 			</dataRef>
 			<dataRef>
@@ -112,12 +175,30 @@
 				<logic>
 					<behavior>editable</behavior>
 					<action trigger="get">
-					obchod: f.obchod;
-					def caseList = findCases( { it.processIdentifier.eq("Team12--OBC")  } ); 
-					change obchod choices {
-						return caseList.collect {it.title}; 
-					} 
-					</action>
+            obchod: f.obchod,
+            obchod_ids: f.obchod_ids;
+            def caseList = findCases( { it.processIdentifier.eq("Team12--OBC")  } );
+            change obchod choices {
+            return caseList.collect {it.title};
+            }
+            change obchod_ids choices {
+            return caseList.collect {it.stringId};
+            }
+          </action>
+          <action trigger="set">
+            obchod: f.obchod,
+            obchod_ids: f.obchod_ids,
+            selected_obchod : f.selected_obchod;
+            def indexObchod;
+            obchod.choices.eachWithIndex{ item,index->
+            if(item == obchod.value)
+            indexObchod = index;
+            }
+
+
+            change selected_obchod about{return obchod_ids.choices[indexObchod].defaultValue; }
+
+          </action>
 				</logic>
 			</dataRef>
 		</dataGroup>
@@ -141,13 +222,76 @@
 		<label>prehliadanie informacii o objednávke</label>
 		<dataGroup>
 			<id>1</id>
+      <title>Podrobnosti o Tovare</title>
 			<dataRef>
 				<id>selected_tovar</id>
 				<logic>
 					<behavior>visible</behavior>
 				</logic>
 			</dataRef>
-		</dataGroup>	
+			<dataRef>
+				<id>category</id>
+				<logic>
+					<behavior>visible</behavior>
+				</logic>
+			</dataRef>
+			<dataRef>
+				<id>price</id>
+				<logic>
+					<behavior>visible</behavior>
+				</logic>
+			</dataRef>
+		</dataGroup>
+		<dataGroup>
+			<id>2</id>
+			<title>Podrobnosti o Zákazníkovi</title>
+      <dataRef>
+        <id>selected_zakaznik</id>
+        <logic>
+          <behavior>visible</behavior>
+        </logic>
+      </dataRef>
+			<dataRef>
+        <id>surname</id>
+        <logic>
+          <behavior>visible</behavior>
+        </logic>
+      </dataRef>
+			<dataRef>
+        <id>mail</id>
+        <logic>
+          <behavior>visible</behavior>
+        </logic>
+      </dataRef>
+		</dataGroup>
+		<dataGroup>
+			<id>3</id>
+			<title>Podrobnosti o Predajni</title>
+      <dataRef>
+        <id>selected_obchod</id>
+        <logic>
+          <behavior>visible</behavior>
+        </logic>
+      </dataRef>
+			<dataRef>
+        <id>address</id>
+        <logic>
+          <behavior>visible</behavior>
+        </logic>
+      </dataRef>
+			<dataRef>
+        <id>city</id>
+        <logic>
+          <behavior>visible</behavior>
+        </logic>
+      </dataRef>
+			<dataRef>
+        <id>kontakt</id>
+        <logic>
+          <behavior>visible</behavior>
+        </logic>
+      </dataRef>
+		</dataGroup>
 	</transition>
 	<transition>
 		<id>5</id>

@@ -95,8 +95,8 @@
 					change status value{return("Vytvorená");}
 					def myObjednavka = findCase({it._id.eq(new org.bson.types.ObjectId(objednavka.value))});
 					def dataObjednavka =  getData("4", myObjednavka);
-					
-					change nazovTovaru value{return(dataObjednavka["tovar"].value);}
+					 
+					change nazovTovaru value{return(dataObjednavka["selected_tovar"].value);}
 					
 
 				</action>				
@@ -354,6 +354,8 @@
 		<event type="finish">
 			<id>1</id>
 			<actions phase="pre">
+				<action>
+				</action>
 				<action>	
 					objednavka : f.objednavka,
 					status : f.status;
