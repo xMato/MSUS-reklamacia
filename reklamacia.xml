@@ -100,8 +100,8 @@
 					def myObjednavka = findCase({it._id.eq(new org.bson.types.ObjectId(objednavka.value))});
 					def dataObjednavka =  getData("4", myObjednavka);					 
 					change nazovTovaru value{return(dataObjednavka["tovar_meno"].value);}
-					
-
+					sdafa
+					cdsa
 				</action>				
 			</actions>
 		</event>
