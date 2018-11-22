@@ -24,7 +24,19 @@
 	<!--DATA-->
 	<data type="text">
 		<id>address</id>
-		<title>Adresa</title>
+		<title>Ulica</title>
+	</data>
+	<data type="text">
+		<id>tovar_meno</id>
+		<title>Názov tovaru</title>
+	</data>
+	<data type="text">
+		<id>uzivatel_meno</id>
+		<title>Meno</title>
+	</data>
+	<data type="text">
+		<id>obchod_meno</id>
+		<title>Odberné miesto</title>
 	</data>
 	<data type="text">
 		<id>name</id>
@@ -70,15 +82,9 @@
 		<id>rekId</id>
 		<title>rekId</title>
 	</data>
-	<data type="enumeration">
+	<data type="text">
 		<id>category</id>
 		<title>Kategória</title>
-		<values>Elektro</values>
-		<values>Autá</values>
-		<values>Hračky</values>
-		<values>Oblečenie</values>
-		<values>Drogéria</values>
-		<values>Hobby a záhrada</values>
 	</data>
 	<data type="text">
 		<id>surname</id>
@@ -116,6 +122,7 @@
 				<id>tovar</id>
 				<logic>
 					<behavior>editable</behavior>
+					<behavior>required</behavior>
 					<action trigger="get">
 					tovar: f.tovar,
 					tovar_ids: f.tovar_ids;
@@ -144,6 +151,7 @@
 				<id>zakaznik</id>
 				<logic>
 					<behavior>editable</behavior>
+					<behavior>required</behavior>
           <action trigger="get">
             zakaznik: f.zakaznik,
             zakaznik_ids: f.zakaznik_ids;
@@ -172,6 +180,7 @@
 				<id>obchod</id>
 				<logic>
 					<behavior>editable</behavior>
+					<behavior>required</behavior>
 					<action trigger="get">
             obchod: f.obchod,
             obchod_ids: f.obchod_ids;
@@ -207,6 +216,9 @@
 					selected_zakaznik: f.selected_zakaznik,
 					surname: f.surname,
 					mail : f.mail,
+					obchod_meno : f.obchod_meno,
+					tovar_meno : f.tovar_meno,
+					uzivatel_meno : f.uzivatel_meno,
 					selected_obchod: f.selected_obchod,
 					address: f.address,
 					kontakt : f.kontakt,
@@ -215,21 +227,27 @@
 					def myTovar = findCase({it._id.eq(new org.bson.types.ObjectId(selected_tovar.value))});
 					def dataTovar =  getData("4", myTovar);
 					change price value{return(dataTovar["price"].value);}
-					change category value{return(dataTovar["category"].value);}
+					change category value{return(dataTovar["category"].value as String);}
+					change tovar_meno value{return(dataTovar["name"].value);}
 
 					def myZakaznik = findCase({it._id.eq(new org.bson.types.ObjectId(selected_zakaznik.value))});
 					def dataZakaznik =  getData("4", myZakaznik);
 					change surname value{return(dataZakaznik["surname"].value);}
 					change mail value{return(dataZakaznik["mail"].value);}
+					change uzivatel_meno value{return(dataZakaznik["name"].value);}
 
-					
 					def myObchod = findCase({it._id.eq(new org.bson.types.ObjectId(selected_obchod.value))});
 					def dataObchod =  getData("4", myObchod);
 					change address value{return(dataObchod["address"].value);}
 					change city value{return(dataObchod["city"].value);}
 					change kontakt value{return(dataObchod["kontakt"].value);}
+					change obchod_meno value{return(dataObchod["name"].value);}
 
-					changeCaseProperty "title" about {"objednavka"}
+					def tname = tovar_meno.value.substring(0,3);
+					def oname = obchod_meno.value.substring(0,3);
+					def zname = uzivatel_meno.value.substring(0,3);
+					
+					changeCaseProperty "title" about {"OBJ-$zname$oname$tname"}
 				</action>
 			</actions>
 		</event>
@@ -243,7 +261,7 @@
 			<id>1</id>
       <title>Podrobnosti o Tovare</title>
 			<dataRef>
-				<id>selected_tovar</id>
+				<id>tovar_meno</id>
 				<logic>
 					<behavior>visible</behavior>
 				</logic>
@@ -260,12 +278,24 @@
 					<behavior>visible</behavior>
 				</logic>
 			</dataRef>
+			<dataRef>
+				<id>selected_tovar</id>
+				<logic>
+					<behavior>hidden</behavior>
+				</logic>
+			</dataRef>
 		</dataGroup>
 		<dataGroup>
 			<id>2</id>
 			<title>Podrobnosti o Zákazníkovi</title>
+			<dataRef>
+				<id>selected_zakaznik</id>
+				<logic>
+					<behavior>hidden</behavior>
+				</logic>
+			</dataRef>
       <dataRef>
-        <id>selected_zakaznik</id>
+        <id>uzivatel_meno</id>
         <logic>
           <behavior>visible</behavior>
         </logic>
@@ -286,8 +316,14 @@
 		<dataGroup>
 			<id>3</id>
 			<title>Podrobnosti o Predajni</title>
+			<dataRef>
+				<id>selected_obchod</id>
+				<logic>
+					<behavior>hidden</behavior>
+				</logic>
+			</dataRef>
       <dataRef>
-        <id>selected_obchod</id>
+        <id>obchod_meno</id>
         <logic>
           <behavior>visible</behavior>
         </logic>
@@ -323,41 +359,87 @@
 				<id>tovar</id>
 				<logic>
 					<behavior>editable</behavior>
+					<behavior>required</behavior>
 					<action trigger="get">
-					tovar: f.tovar;
+					tovar: f.tovar,
+					tovar_ids: f.tovar_ids;
 					def caseList = findCases( { it.processIdentifier.eq("Team12--TVR")  } ); 
 					change tovar choices {
 						return caseList.collect {it.title}; 
 					} 
-
+					change tovar_ids choices {
+						return caseList.collect {it.stringId}; 
+					} 
 					</action>
-					
+					<action trigger="set">
+					tovar: f.tovar,
+					tovar_ids: f.tovar_ids,
+					selected_tovar : f.selected_tovar;
+					def indexTovar;
+					tovar.choices.eachWithIndex{ item,index->
+						if(item == tovar.value)
+							indexTovar = index;
+						}
+					change selected_tovar about{return tovar_ids.choices[indexTovar].defaultValue; }
+					</action>
 				</logic>
 			</dataRef>
 			<dataRef>
 				<id>zakaznik</id>
 				<logic>
 					<behavior>editable</behavior>
-					<action trigger="get">
-					zakaznik: f.zakaznik;
-					def caseList = findCases( { it.processIdentifier.eq("Team12--ZAK")  } ); 
-					change zakaznik choices {
-						return caseList.collect {it.title}; 
-					} 
-					</action>
+					<behavior>required</behavior>
+          <action trigger="get">
+            zakaznik: f.zakaznik,
+            zakaznik_ids: f.zakaznik_ids;
+            def caseList = findCases( { it.processIdentifier.eq("Team12--ZAK")  } );
+            change zakaznik choices {
+            return caseList.collect {it.title};
+            }
+            change zakaznik_ids choices {
+            return caseList.collect {it.stringId};
+            }
+          </action>
+          <action trigger="set">
+            zakaznik: f.zakaznik,
+            zakaznik_ids: f.zakaznik_ids,
+            selected_zakaznik : f.selected_zakaznik;
+            def indexZakaznik;
+            zakaznik.choices.eachWithIndex{ item,index->
+            if(item == zakaznik.value)
+            indexZakaznik = index;
+            }
+            change selected_zakaznik about{return zakaznik_ids.choices[indexZakaznik].defaultValue; }
+          </action>
 				</logic>
 			</dataRef>
 			<dataRef>
 				<id>obchod</id>
 				<logic>
 					<behavior>editable</behavior>
+					<behavior>required</behavior>
 					<action trigger="get">
-					obchod: f.obchod;
-					def caseList = findCases( { it.processIdentifier.eq("Team12--OBC")  } ); 
-					change obchod choices {
-						return caseList.collect {it.title}; 
-					} 
-					</action>
+            obchod: f.obchod,
+            obchod_ids: f.obchod_ids;
+            def caseList = findCases( { it.processIdentifier.eq("Team12--OBC")  } );
+            change obchod choices {
+            return caseList.collect {it.title};
+            }
+            change obchod_ids choices {
+            return caseList.collect {it.stringId};
+            }
+          </action>
+          <action trigger="set">
+            obchod: f.obchod,
+            obchod_ids: f.obchod_ids,
+            selected_obchod : f.selected_obchod;
+            def indexObchod;
+            obchod.choices.eachWithIndex{ item,index->
+            if(item == obchod.value)
+            indexObchod = index;
+            }
+            change selected_obchod about{return obchod_ids.choices[indexObchod].defaultValue; }
+          </action>
 				</logic>
 			</dataRef>
 		</dataGroup>
@@ -371,29 +453,38 @@
 					selected_zakaznik: f.selected_zakaznik,
 					surname: f.surname,
 					mail : f.mail,
+					obchod_meno : f.obchod_meno,
+					tovar_meno : f.tovar_meno,
+					uzivatel_meno : f.uzivatel_meno,
 					selected_obchod: f.selected_obchod,
 					address: f.address,
 					kontakt : f.kontakt,
 					city : f.city;
-
+					
 					def myTovar = findCase({it._id.eq(new org.bson.types.ObjectId(selected_tovar.value))});
 					def dataTovar =  getData("4", myTovar);
 					change price value{return(dataTovar["price"].value);}
 					change category value{return(dataTovar["category"].value);}
+					change tovar_meno value{return(dataTovar["name"].value);}
 
 					def myZakaznik = findCase({it._id.eq(new org.bson.types.ObjectId(selected_zakaznik.value))});
 					def dataZakaznik =  getData("4", myZakaznik);
 					change surname value{return(dataZakaznik["surname"].value);}
 					change mail value{return(dataZakaznik["mail"].value);}
+					change uzivatel_meno value{return(dataZakaznik["name"].value);}
 
-					
 					def myObchod = findCase({it._id.eq(new org.bson.types.ObjectId(selected_obchod.value))});
 					def dataObchod =  getData("4", myObchod);
 					change address value{return(dataObchod["address"].value);}
 					change city value{return(dataObchod["city"].value);}
 					change kontakt value{return(dataObchod["kontakt"].value);}
+					change obchod_meno value{return(dataObchod["name"].value);}
 
-					changeCaseProperty "title" about {"objednavka"}
+					def tname = tovar_meno.value.substring(0,3);
+					def oname = obchod_meno.value.substring(0,3);
+					def zname = uzivatel_meno.value.substring(0,3);
+					
+					changeCaseProperty "title" about {"OBJ-$zname$oname$tname"}				
 				</action>
 			</actions>
 		</event>
