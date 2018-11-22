@@ -85,22 +85,7 @@
 				</logic>
 			</dataRef>
 		</dataGroup>
-		<event type="finish">
-			<id>1</id>
-			<actions phase="pre">
-				<action>	
-					objednavka : f.objednavka,
-					nazovTovaru : f.nazovTovaru,
-					status : f.status;
-					change status value{return("Vytvorená");}
-					def myObjednavka = findCase({it._id.eq(new org.bson.types.ObjectId(objednavka.value))});
-					def dataObjednavka =  getData("4", myObjednavka);					 
-					change nazovTovaru value{return(dataObjednavka["selected_tovar"].value);}
-					
-
-				</action>				
-			</actions>
-		</event>
+		
 	</transition>
 	<transition>
 		<id>4</id>
