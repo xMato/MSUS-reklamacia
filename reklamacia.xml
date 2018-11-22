@@ -46,7 +46,10 @@
 		<id>nazovTovaru</id>
 		<title>Názov Tovaru</title>
 	</data>
-	
+	<data type="text">
+		<id>price</id>
+		<title>Cena Tovaru</title>
+	</data>
 	<!-- TRANSITIONS -->
 	<transition>
 		<id>1</id>
@@ -91,11 +94,12 @@
 				<action>	
 					objednavka : f.objednavka,
 					nazovTovaru : f.nazovTovaru,
-					status : f.status;
+					status : f.status,
+					price: f.price;
 					change status value{return("Vytvorená");}
 					def myObjednavka = findCase({it._id.eq(new org.bson.types.ObjectId(objednavka.value))});
 					def dataObjednavka =  getData("4", myObjednavka);					 
-					change nazovTovaru value{return(dataObjednavka["selected_tovar"].value);}
+					change nazovTovaru value{return(dataObjednavka["tovar_meno"].value);}
 					
 
 				</action>				
