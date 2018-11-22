@@ -507,6 +507,24 @@
 				<id>1</id>
 				<actions phase="pre">
 					<action>
+					 	def pocet = 0;
+						def data;
+						def cases = findCases( { it.title.eq("reklamacia") } );
+						if(cases){
+							cases.each{
+								data =  getData("4", it);
+								if(data){
+									if(data["objednavka"].value == useCase.getStringId()){
+										if(data["status"].value == "Schválená"){
+											pocet = pocet+1;
+										}
+									}
+								}
+							}
+						}
+						if(pocet >= 3) throw new Exception("privela rekalmacii!");
+					</action>
+					<action>
 						rekId : f.rekId;
 						def newCase = createCase("Team12--REK", "reklamacia");
 						change rekId value {
