@@ -116,6 +116,18 @@
 		<x>146</x>
 		<y>253</y>
 		<label>vytvorenie objednávky</label>
+		<roleRef>
+			<id>system</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<roleRef>
+			<id>admin</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
 		<dataGroup>
 			<id>1</id>
 			<dataRef>
@@ -257,6 +269,30 @@
 		<x>318</x>
 		<y>143</y>
 		<label>prehliadanie informacii o objednávke</label>
+		<roleRef>
+			<id>zakaznik</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<roleRef>
+			<id>predajca</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<roleRef>
+			<id>schvalovatel</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<roleRef>
+			<id>admin</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
 		<dataGroup>
 			<id>1</id>
       <title>Podrobnosti o Tovare</title>
@@ -353,6 +389,12 @@
 		<x>311</x>
 		<y>372</y>
 		<label>upravit informacie o objednávke</label>
+		<roleRef>
+			<id>admin</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
 		<dataGroup>
 			<id>1</id>
 			<dataRef>
@@ -495,7 +537,18 @@
     <x>446</x>
     <y>250</y>
     <label>podanie reklamacie</label>
-
+		<roleRef>
+			<id>zakaznik</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
+		<roleRef>
+			<id>admin</id>
+			<logic>
+				<perform>true</perform>
+			</logic>
+		</roleRef>
 			<dataRef>
 				<id>can_finish</id>
 				<logic>
